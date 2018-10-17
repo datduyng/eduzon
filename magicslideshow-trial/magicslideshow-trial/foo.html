@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+.mySlides {display:none;}
+.thumbnail {
+    height: 100px;
+}
+
+.thumbnail img {
+    max-height: 50%;
+    max-width: 50%;
+    border: 1px solid red;
+}
+</style>
+<body>
+
+<!-- SCRIPT -->
+<script type="text/javascript" src="app.js"></script>
+<script>
+
+// base on: http://www.javascriptkit.com/howto/show2.shtml
+var NUM_IMAGES = 4;
+var imFolder = "./query-image/";
+var imNames = ["https://i.pinimg.com/originals/75/52/4b/75524b6816dc0a06675c2331885bafc1.jpg",
+    "https://i.pinimg.com/originals/7a/f9/05/7af9056a5fc3cb13a02cc1d065507909.jpg",
+    "https://i.ytimg.com/vi/7_QG2AZegAM/maxresdefault.jpg",
+    "http://www.sleeping-trees.com/tent.jpg"];
+// var slideImages = new Array();
+// for(i = 0;i<slideImages.length;i++){
+//   slideImages[i] = new Image();
+//   slideImages[i].src = imNames[i];
+// }// end for
+
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  // var x = document.getElementsByClassName("mySlides");
+  // var x = slideImages;
+  // if (n > x.length) { slideIndex = 1 }
+  // if (n < 1) { slideIndex = x.length }
+  // for (i = 0; i < x.length; i++) {
+  //   x[i].style.display = "none";
+  // }
+  // document.getElementById('slide').src = slideimages[slideIndex - 1].src;
+  // x[slideIndex - 1].style.display = "block";
+  //   var x = document.getElementsByClassName("mySlides");
+  // var x = slideImages;
+  if (n > NUM_IMAGES) { slideIndex = 1 }
+  if (n < 1) { slideIndex = NUM_IMAGES }
+  // for (i = 0; i < x.length; i++) {
+  //   x[i].style.display = "none";
+  // }
+  document.getElementById('slide').src = imNames[slideIndex - 1];
+  // x[slideIndex - 1].style.display = "block";
+  
+}
+
+var myIndex = 0;
+<!-- carousel(); -->
+function carousel(b) {
+    var i;
+	var x = document.getElementsByClassName("mySlides");
+	for (i = 0; i < x.length; i++) {
+		x[i].style.display = "none";  
+	}
+	myIndex++;
+	if (myIndex > x.length) {myIndex = 1}    
+	x[myIndex-1].style.display = "block";  
+	setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+function javascript_abort()
+{
+   throw new Error('This is not an error. This is just to abort javascript');
+}
+</script>
+
+<!-- END SCRIPT -->
+
+<h2 class="w3-center">Manual Slideshow</h2>
+<div>
+<p aligned="left">
+<button class="w3-button w3-black" onclick="carousel()">Auto</button>
+<button class="w3-button w3-black" onclick="javascript_abort()">Stop</button>
+<button class="w3-button w3-black" onclick="plusDivs(-1)">&#10094;</button>
+<button class="w3-button w3-black" onclick="plusDivs(1)">&#10095;</button>
+<button class="w3-button w3-black" onclick="processPyScript()">python</button>
+<!-- w3-display-left -->
+</p>
+<div>
+
+<div class="w3-content w3-display-container">
+  <!-- <img class="mySlides" src="img_snowtops.jpg" style="width:100%"> -->
+  <!-- <img class="mySlides" src="img_lights.jpg" style="width:100%"> -->
+  <!-- <img class="mySlides" src="img_mountains.jpg" style="width:100%"> -->
+  <!-- <img class="mySlides" src="img_forest.jpg" style="width:100%"> -->
+  <!-- IMAGE -->
+  <div class="row">
+    <div class="col-xs-10">
+            <a href="#" class="thumbnail">
+              <img id="slide" src="https://i.pinimg.com/originals/75/52/4b/75524b6816dc0a06675c2331885bafc1.jpg">
+              <!-- style="width:50%;height:60%" -->
+            </a>
+            <!-- <img class="mySlides" src="https://3.bp.blogspot.com/-TpSTz_vpudc/WhE6Gl91-6I/AAAAAAAAnbs/dpyoPqQAvtIHBU4-GmwCPn5iTojmnJ3LQCLcBGAs/s1600/maxresdefault.jpg" style="width:50%;height:60%">
+            			<img class="mySlides" src="http://c8.alamy.com/comp/M53PR3/feel-pity-of-young-white-lion-in-the-steel-cage-M53PR3.jpg" style="width:50%;height:60%">
+            			<img class="mySlides" src="https://i.pinimg.com/originals/7a/f9/05/7af9056a5fc3cb13a02cc1d065507909.jpg" style="width:50%;height:60%"> -->
+            <!-- <img title="Touch, tap, swipe" src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-01.jpg?canvas.width=2400" alt="" data-caption="Natural touchscreen experience - visitors intuitively feel at ease with your slideshows." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-01.jpg?scale.height=60" /> -->
+            <!-- <img title="Maximum engagement" src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-02.jpg?canvas.width=2400" alt="" data-caption="Works beautifully out-of-the-box or optimize 30 popular settings to meet your requirements." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-02.jpg?scale.height=60" /> -->
+            <!-- <img title="Ken Burns gorgeousness" data-caption="Enable the popular zoom/pan/fade Ken Burns effect - like the one you see on this demo." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-03.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-03.jpg?scale.height=60" /> -->
+            <!-- <img title="Responsive sizing on every device" data-caption="Images automatically resize to fit your viewers screen, so they always look amazing." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-04.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-04.jpg?scale.height=60" /> -->
+            <!-- <img title="Extensions for quick installation" data-caption="Free plugins for 19 popular platforms for super-easy installation and customization." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-05.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-05.jpg?scale.height=60" /> -->
+            <!-- <img title="JavaScript slideshow" data-caption="Uses pure JavaScript and CSS. jQuery isn't required but is fully supported (as are all other JavaScript frameworks)." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-06.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-06.jpg?scale.height=60" /> -->
+            <!-- <img title="Highly customisable" data-caption="Make it exactly how you want it - there are thousands of possible combinations." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-07.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-07.jpg?scale.height=60" /> -->
+            <!-- <img title="Full-screen power" data-caption="Knock-out big images to fill the screen. Enable full-screen images for a real wow-factor." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-08.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-08.jpg?scale.height=60" /> -->
+            <!-- <img title="Works on any website" data-caption="Custom-built websites, WordPress, Magento, eBay, whatever! Magic Slideshow works everywere." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-09.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-09.jpg?scale.height=60" /> -->
+            <!-- <img title="Touch, tap, swipe" src="https://i.pinimg.com/originals/75/52/4b/75524b6816dc0a06675c2331885bafc1.jpg" alt="" data-caption="Natural touchscreen experience - visitors intuitively feel at ease with your slideshows." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-01.jpg?scale.height=60" /> -->
+            <!-- <img title="Maximum engagement" src="https://i.pinimg.com/originals/7a/f9/05/7af9056a5fc3cb13a02cc1d065507909.jpg" alt="" data-caption="Works beautifully out-of-the-box or optimize 30 popular settings to meet your requirements." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-02.jpg?scale.height=60" /> -->
+            <!-- <img title="Ken Burns gorgeousness" data-caption="Enable the popular zoom/pan/fade Ken Burns effect - like the one you see on this demo." src="https://i.ytimg.com/vi/7_QG2AZegAM/maxresdefault.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-03.jpg?scale.height=60" /> -->
+            <!-- <img title="Responsive sizing on every device" data-caption="Images automatically resize to fit your viewers screen, so they always look amazing." src="http://www.sleeping-trees.com/tent.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-04.jpg?scale.height=60" /> -->
+            <!-- <img title="Extensions for quick installation" data-caption="Free plugins for 19 popular platforms for super-easy installation and customization." src="https://fablesofaesop.com/wp-content/uploads/2013/11/i014_th_lion_mouse.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-05.jpg?scale.height=60" /> -->
+            <!-- <img title="JavaScript slideshow" data-caption="Uses pure JavaScript and CSS. jQuery isn't required but is fully supported (as are all other JavaScript frameworks)." src="https://i.pinimg.com/originals/b8/f1/6c/b8f16c49ce97717709fc5edd5fc4edb7.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-06.jpg?scale.height=60" /> -->
+            <!-- <img title="Highly customisable" data-caption="Make it exactly how you want it - there are thousands of possible combinations." src="https://thumb1.shutterstock.com/display_pic_with_logo/171427636/1128788753/stock-photo-woman-is-very-terrified-trembling-from-fear-portrait-of-attractive-blond-european-female-biting-1128788753.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-07.jpg?scale.height=60" /> -->
+            <!-- <img title="Full-screen power" data-caption="Knock-out big images to fill the screen. Enable full-screen images for a real wow-factor." src="https://3.bp.blogspot.com/-TpSTz_vpudc/WhE6Gl91-6I/AAAAAAAAnbs/dpyoPqQAvtIHBU4-GmwCPn5iTojmnJ3LQCLcBGAs/s1600/maxresdefault.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-08.jpg?scale.height=60" /> -->
+            <!-- <img title="Works on any website" data-caption="Custom-built websites, WordPress, Magento, eBay, whatever! Magic Slideshow works everywere." src="http://c8.alamy.com/comp/M53PR3/feel-pity-of-young-white-lion-in-the-steel-cage-M53PR3.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-09.jpg?scale.height=60" /> -->
+            <!-- <img title="Touch, tap, swipe" src="https://i.pinimg.com/originals/75/52/4b/75524b6816dc0a06675c2331885bafc1.jpg" alt="" data-caption="Natural touchscreen experience - visitors intuitively feel at ease with your slideshows." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-01.jpg?scale.height=60" /> -->
+            <!-- <img title="Maximum engagement" src="https://i.pinimg.com/originals/7a/f9/05/7af9056a5fc3cb13a02cc1d065507909.jpg" alt="" data-caption="Works beautifully out-of-the-box or optimize 30 popular settings to meet your requirements." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-02.jpg?scale.height=60" /> -->
+            <!-- <img title="Ken Burns gorgeousness" data-caption="Enable the popular zoom/pan/fade Ken Burns effect - like the one you see on this demo." src="https://i.ytimg.com/vi/7_QG2AZegAM/maxresdefault.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-03.jpg?scale.height=60" /> -->
+            <!-- <img title="Responsive sizing on every device" data-caption="Images automatically resize to fit your viewers screen, so they always look amazing." src="http://www.sleeping-trees.com/tent.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-04.jpg?scale.height=60" /> -->
+            <!-- <img title="Extensions for quick installation" data-caption="Free plugins for 19 popular platforms for super-easy installation and customization." src="https://fablesofaesop.com/wp-content/uploads/2013/11/i014_th_lion_mouse.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-05.jpg?scale.height=60" /> -->
+            <!-- <img title="JavaScript slideshow" data-caption="Uses pure JavaScript and CSS. jQuery isn't required but is fully supported (as are all other JavaScript frameworks)." src="https://i.pinimg.com/originals/b8/f1/6c/b8f16c49ce97717709fc5edd5fc4edb7.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-06.jpg?scale.height=60" /> -->
+            <!-- <img title="Highly customisable" data-caption="Make it exactly how you want it - there are thousands of possible combinations." src="https://thumb1.shutterstock.com/display_pic_with_logo/171427636/1128788753/stock-photo-woman-is-very-terrified-trembling-from-fear-portrait-of-attractive-blond-european-female-biting-1128788753.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-07.jpg?scale.height=60" /> -->
+            <!-- <img title="Full-screen power" data-caption="Knock-out big images to fill the screen. Enable full-screen images for a real wow-factor." src="https://3.bp.blogspot.com/-TpSTz_vpudc/WhE6Gl91-6I/AAAAAAAAnbs/dpyoPqQAvtIHBU4-GmwCPn5iTojmnJ3LQCLcBGAs/s1600/maxresdefault.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-08.jpg?scale.height=60" /> -->
+            <!-- <img title="Works on any website" data-caption="Custom-built websites, WordPress, Magento, eBay, whatever! Magic Slideshow works everywere." src="http://c8.alamy.com/comp/M53PR3/feel-pity-of-young-white-lion-in-the-steel-cage-M53PR3.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-09.jpg?scale.height=60" /> -->
+            
+            <!-- END IMAGE -->
+            
+          
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>

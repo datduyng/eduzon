@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Magic Slideshow</title>
+
+<link href="magicslideshow/magicslideshow.css" rel="stylesheet" type="text/css" media="screen"/>
+<script src="magicslideshow/magicslideshow.js" type="text/javascript"></script>
+
+<style type="text/css">
+    html { position: relative; min-height: 100%; }
+    body { position: absolute; left:0; right: 0; min-height: 100%; background:#fff; margin:0; padding:0; font-size: 100%; }
+    body, td {
+        font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', Tahoma, Arial, Verdana, sans-serif;
+        line-height: 1.5em;
+        -webkit-text-rendering: geometricPrecision;
+        text-rendering: geometricPrecision;
+    }
+    h1 { font-size:1.5em; font-weight:normal; color:#555; }
+    h2 { font-size:1.3em; font-weight:normal; color:#555; }
+    h2.caption { margin: 2.5em 0 0;}
+    h3 { font-size:1.1em; font-weight: normal; color:#555; }
+    h3.pad { margin: 2em 0 1em; }
+    h4 { font-size: 1em; font-weight:normal; color:#555; }
+    p.pad { margin-top: 1.5em; }
+    a { outline: none;}
+
+
+    .cfg-btn {
+        background-color: rgb(55, 181, 114);
+        color: #fff;
+        border: 0;
+        box-shadow: 0 0 1px 0px rgba(0,0,0,0.3);
+        outline:0;
+        cursor: pointer;
+        width: 200px;
+        padding: 10px;
+        font-size: 1em;
+        position: relative;
+        display: inline-block;
+        margin: 10px auto;
+    }
+    .cfg-btn:hover:not([disabled]) {
+        background-color: rgb(37, 215, 120);
+    }
+    .mobile-magic .cfg-btn:hover:not([disabled]) { background: rgb(55, 181, 114); }
+    .cfg-btn[disabled] { opacity: .5; color: #808080; background: #ddd; }
+
+    .cfg-btn.btn-preview,
+    .cfg-btn.btn-preview:active,
+    .cfg-btn.btn-preview:focus {
+        font-size: 1em;
+        position: relative;
+        display: block;
+        margin: 10px auto;
+    }
+
+    .cfg-btn,
+    .preview,
+    .app-figure,
+    .api-controls,
+    .wizard-settings,
+    .wizard-settings .inner,
+    .wizard-settings .footer,
+    .wizard-settings input,
+    .wizard-settings select {
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+    }
+    .preview,
+    .wizard-settings {
+        padding: 10px;
+        border: 0;
+        min-height: 1px;
+    }
+    .preview {
+        position: relative;
+    }
+
+    .api-controls {
+        text-align: center;
+    }
+    .api-controls button,
+    .api-controls button:active,
+    .api-controls button:focus {
+         width: 80px; font-size: .7em;
+         white-space: nowrap;
+    }
+
+    .app-figure {
+        width: 80% !important;
+        margin: 50px auto; border: 0px solid red;
+        padding: 20px;
+        position: relative;
+        text-align: center;
+    }
+    .selectors { margin-top: 10px; }
+
+    .app-code-sample {
+        max-width: 80%;
+        margin: 80px auto 0;
+        text-align: center;
+        position: relative;
+    }
+    .app-code-sample input[type="radio"] {
+        display: none;
+    }
+    .app-code-sample label {
+        display: inline-block;
+        padding: 2px 12px;
+        margin: 0;
+        font-size: .8em;
+        text-decoration: none;
+        cursor: pointer;
+        color: #666;
+        border: 1px solid rgba(136, 136, 136, 0.5);
+        background-color: transparent;
+    }
+    .app-code-sample label:hover {
+        color: #fff;
+        background-color: rgb(253, 154, 30);
+        border-color: rgb(253, 154, 30);
+    }
+    .app-code-sample input[type="radio"]:checked+label {
+        color: #fff;
+        background-color: rgb(110, 110, 110) !important;
+        border-color: rgba(110, 110, 110, 0.7) !important;
+    }
+    .app-code-sample label:first-of-type {
+        border-radius: 4px 0 0 4px;
+        border-right-color: transparent;
+    }
+    .app-code-sample label:last-of-type {
+        border-radius: 0 4px 4px 0;
+        border-left-color: transparent;
+    }
+
+    .app-code-sample .app-code-holder {
+        padding: 0;
+        position: relative;
+        border: 1px solid #eee;
+        border-radius: 0px;
+        background-color: #fafafa;
+        margin: 15px 0;
+    }
+    .app-code-sample .app-code-holder > div {
+        display: none;
+    }
+    .app-code-sample .app-code-holder pre {
+        text-align: left;
+        white-space: pre-line;
+        border: 0px solid #eee;
+        border-radius: 0px;
+        background-color: transparent;
+        padding: 25px 50px 25px 25px;
+        margin: 0;
+        min-height: 25px;
+    }
+    .app-code-sample input[type="radio"]:nth-of-type(1):checked ~ .app-code-holder > div:nth-of-type(1) {
+        display: block;
+    }
+    .app-code-sample input[type="radio"]:nth-of-type(2):checked ~ .app-code-holder > div:nth-of-type(2) {
+        display: block;
+    }
+
+    .app-code-sample .app-code-holder .cfg-btn-copy {
+        display: none;
+        z-index: -1;
+        position: absolute;
+        top:10px; right: 10px;
+        width: 44px;
+        font-size: .65em;
+        white-space: nowrap;
+        margin: 0;
+        padding: 4px;
+    }
+    .copy-msg {
+        font: normal 11px/1.2em 'Helvetica Neue', Helvetica, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, sans-serif;
+        color: #2a4d14;
+        border: 1px solid #2a4d14;
+        border-radius: 4px;
+        position: absolute;
+        top: 8px;
+        left: 0;
+        right: 0;
+        width: 200px;
+        max-width: 70%;
+        padding: 4px;
+        margin: 0px auto;
+        text-align: center;
+    }
+    .copy-msg-failed {
+        color: #b80c09;
+        border-color: #b80c09;
+        width: 430px;
+    }
+    .mobile-magic .app-code-sample .cfg-btn-copy { display: none; }
+    #code-to-copy { position: absolute; width: 0; height: 0; top: -10000px; }
+    .lt-ie9-magic .app-code-sample { display: none; }
+
+    .wizard-settings {
+        background-color: #4f4f4f;
+        color: #a5a5a5;
+        position: absolute;
+        right: 0;
+        width: 340px;
+    }
+    .wizard-settings .inner {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    .wizard-settings .footer {
+        color: #c7d59f;
+        font-size: .75em;
+        width: 100%;
+        position: relative;
+        vertical-align: bottom;
+        text-align: center;
+        padding: 6px;
+        margin-top: 10px;
+    }
+    .wizard-settings .footer a { color: inherit; text-decoration: none; }
+    .wizard-settings .footer a:hover { text-decoration: underline; }
+
+    .wizard-settings a { color: #cc9933; }
+    .wizard-settings a:hover { color: #dfb363; }
+    .wizard-settings table > tbody > tr > td { vertical-align: top; }
+    .wizard-settings table { min-width: 300px; max-width: 100%; font-size: .8em; margin: 0 auto; }
+    .wizard-settings table caption { font-size: 1.5em; padding: 16px 8px; }
+    .wizard-settings table td { padding: 4px 8px; }
+    .wizard-settings table td:first-child { white-space: nowrap; }
+    .wizard-settings table td:nth-child(2) { text-align: left; }
+    .wizard-settings table td .values {
+        font-size: 0.8em;
+        line-height: 1.3em;
+        display: block;
+        max-width: 170px;
+    }
+    .wizard-settings table td .values:before { content: ''; display: block; }
+
+    .wizard-settings input,
+    .wizard-settings select {
+        width: 170px;
+    }
+    .wizard-settings input {
+        padding: 0px 4px;
+    }
+    .wizard-settings input[disabled] {
+        color: #808080;
+        background: #a7a7a7;
+        border: 1px solid #a7a7a7;
+    }
+
+    .preview { width: 70%; float: left; }
+    @media (min-width: 0px) {
+        .preview { width: 100%; float: none; }
+    }
+    @media (min-width: 1024px) {
+        .preview { width: calc(100% - 340px); }
+        .wizard-settings { top: 0; min-height: 100%; }
+        .wizard-settings .inner { margin-top: 60px; }
+        .wizard-settings .footer { position: absolute; bottom: 0; left: 0; }
+        .wizard-settings .settings-controls {
+            position: fixed;
+            top: 0; right: 0;
+            width: 340px;
+            padding: 10px 0 0;
+            text-align: center;
+            background-color: inherit;
+        }
+    }
+    @media screen and (max-width: 1023px) {
+        .app-figure { width: 98% !important; margin: 50px 0; padding: 0; }
+        .app-code-sample { display: none; }
+        .wizard-settings { width: 100%; }
+    }
+    @media screen and (max-width: 600px) {
+        .api-controls button, .api-controls button:active, .api-controls button:focus {
+            width: 70px;
+        }
+    }
+    @media screen and (max-width: 560px) {
+        .api-controls .sep { content: ''; display: table; }
+    }
+    @media screen and (min-width: 1600px) {
+        .preview { padding: 10px 160px; }
+    }
+</style>
+<script>
+    var MagicSlideshowOptions = {};
+    MagicSlideshowOptions = {
+        effect: 'random',
+        onReady: function () {
+            console.log('onReady', arguments[0]);
+        },
+        onPlay: function () {
+            console.log('onPlay', arguments[0]);
+        },
+        onPause: function () {
+            console.log('onPause', arguments[0]);
+        },
+        onVideoPlay: function () {
+            console.log('onVideoPlay', arguments[0]);
+        },
+        onVideoPause: function () {
+            console.log('onVideoPause', arguments[0]);
+        },
+        onEnterFullscreen: function () {
+            console.log('onEnterFullscreen', arguments[0]);
+        },
+        onExitFullscreen: function () {
+            console.log('onExitFullscreen', arguments[0]);
+        },
+        onBeforeSlideChange: function () {
+            console.log('onBeforeSlideChange', arguments[0]);
+        },
+        onAfterSlideChange: function () {
+            console.log('onAfterSlideChange', arguments[0]);
+        }
+    };
+
+    function isDefaultOption(o) {
+        return magicJS.$A(magicJS.$(o).byTag('option')).filter(function(opt){
+            return opt.selected && opt.defaultSelected;
+        }).length > 0;
+    }
+
+    function toOptionValue(v) {
+        if ( /^(true|false)$/.test(v) ) {
+            return 'true' === v;
+        }
+        if ( /^[0-9]{1,}$/i.test(v) ) {
+            return parseInt(v,10);
+        }
+        return v;
+    }
+
+    function makeOptions(optType) {
+        var  value = null, isDefault = true, newParams = Array(), newParamsS = '', options = {};
+        magicJS.$(magicJS.$A(magicJS.$(optType).getElementsByTagName("INPUT"))
+            .concat(magicJS.$A(magicJS.$(optType).getElementsByTagName('SELECT'))))
+            .forEach(function(param){
+                value = ('checkbox'==param.type) ? param.checked.toString() : param.value;
+
+                isDefault = ('checkbox'==param.type) ? value == param.defaultChecked.toString() :
+                    ('SELECT'==param.tagName) ? isDefaultOption(param) : value == param.defaultValue;
+
+                if ( null !== value && !isDefault) {
+                    options[param.name] = toOptionValue(value);
+                }
+        });
+        return options;
+    }
+
+    function updateScriptCode() {
+        var code = '&lt;script&gt;\nvar MagicSlideshowOptions = ';
+        code += JSON.stringify(MagicSlideshowOptions, null, 2).replace(/\"(\w+)\":/g,"$1:")+';';
+        code += '\n&lt;/script&gt;';
+
+        magicJS.$('app-code-sample-script').changeContent(code);
+    }
+
+    function updateInlineCode() {
+        var code = '&lt;div class="MagicSlideshow" data-options="';
+        var t = JSON.stringify(MagicSlideshowOptions);
+        t = t.replace(/\"(\w+)\":(?:\"([^"]+)\"|([^,}]+))(,)?/g, "$1: $2$3; ");
+        code += JSON.stringify(MagicSlideshowOptions).replace(/\"(\w+)\":(?:\"([^"]+)\"|([^,}]+))(,)?/g, "$1: $2$3; ").replace(/\{([^{}]*)\}/,"$1").replace(/\s*$/,'');
+        code += '"&gt;';
+
+        magicJS.$('app-code-sample-inline').changeContent(code);
+    }
+
+    function applySettings() {
+        MagicSlideshow.stop('slideshow-1');
+        MagicSlideshowOptions = makeOptions('params');
+        MagicSlideshow.start('slideshow-1');
+        updateScriptCode();
+        updateInlineCode();
+        try {
+            prettyPrint();
+        } catch(e) {}
+    }
+
+    function copyToClipboard(src) {
+        var
+            copyNode,
+            range, success;
+
+        if (!isCopySupported()) {
+            disableCopy();
+            return;
+        }
+        copyNode = document.getElementById('code-to-copy');
+        copyNode.innerHTML = document.getElementById(src).innerHTML;
+
+        range = document.createRange();
+        range.selectNode(copyNode);
+        window.getSelection().addRange(range);
+
+        try {
+            success = document.execCommand('copy');
+        } catch(err) {
+            success = false;
+        }
+        window.getSelection().removeAllRanges();
+        if (!success) {
+            disableCopy();
+        } else {
+            new magicJS.Message('Settings code copied to clipboard.', 3000,
+                document.querySelector('.app-code-holder'), 'copy-msg');
+        }
+    }
+
+    function disableCopy() {
+        magicJS.$A(document.querySelectorAll('.cfg-btn-copy')).forEach(function(node) {
+            node.disabled = true;
+        });
+        new magicJS.Message('Sorry, cannot copy settings code to clipboard. Please select and copy code manually.', 3000,
+            document.querySelector('.app-code-holder'), 'copy-msg copy-msg-failed');
+    }
+
+    function isCopySupported() {
+        if ( !window.getSelection || !document.createRange || !document.queryCommandSupported ) { return false; }
+        return document.queryCommandSupported('copy');
+    }
+</script>
+</head>
+<body>
+
+<!-- FORM -->
+        <!--.row-->
+        <!-- <div class="row"> -->
+            <!-- <div class="col-md-12"> -->
+                <div class="feedback-form">
+                    <h2>Get in touch</h2>
+
+                    <form id="contactForm" action="sendemail.php" method="POST">
+                        <!-- <div class="form-group"> -->
+                            <!-- <label for="InputName">Name</label> -->
+                            <!-- <input type="text" name="name" required="" class="form-control" id="InputName" -->
+                                   <!-- placeholder="Full Name"> -->
+                        <!-- </div> -->
+                        <!-- <div class="form-group"> -->
+                            <!-- <label for="InputEmail">Email address</label> -->
+                            <!-- <input type="email" name="email" required="" class="form-control" id="InputEmail" -->
+                                   <!-- placeholder="Email"> -->
+                        <!-- </div> -->
+                        <!-- <div class="form-group"> -->
+                            <!-- <label for="InputSubject">Subject</label> -->
+                            <!-- <input type="text" name="subject" class="form-control" id="InputSubject" -->
+                                   <!-- placeholder="Subject"> -->
+                        <!-- </div> -->
+                        <div class="form-group" align="left">
+                            <label for="message-text" class="control-label">Story</label>
+                            <textarea class="form-control" required="" name="message" id="message-text"
+                                      placeholder="Write message" rows="20" cols="100"></textarea>
+                        </div>
+						<p align="center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+						</p>
+                    </form>
+                </div>
+                <!-- .feedback-form -->
+
+
+            <!-- </div> -->
+		<!-- </div> -->
+<!-- END FORM -->
+<!-- --------------------------------------------------------------------		 -->
+<div class="preview col">
+    <div class="api-controls">
+        <button class="cfg-btn" onclick="MagicSlideshow.start('slideshow-1')">Start</button>
+        <button class="cfg-btn" onclick="MagicSlideshow.stop('slideshow-1')">Stop</button>
+        <button class="cfg-btn" onclick="MagicSlideshow.refresh('slideshow-1')">Refresh</button><span class="sep"></span>
+        <button class="cfg-btn" onclick="MagicSlideshow.prev('slideshow-1')">Prev</button>
+        <button class="cfg-btn" onclick="MagicSlideshow.next('slideshow-1')">Next</button>
+        <button class="cfg-btn" onclick="MagicSlideshow.play('slideshow-1', 100)">Play</button>
+        <button class="cfg-btn" onclick="MagicSlideshow.pause('slideshow-1')">Pause</button>
+        <button class="cfg-btn" onclick="MagicSlideshow.enterFullscreen('slideshow-1')">EnterFullscreen</button>
+    </div>
+
+    <div class="app-figure" id="zoom-fig">
+        <div class="MagicSlideshow"  id="slideshow-1">
+            <!-- <img title="Touch, tap, swipe" src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-01.jpg?canvas.width=2400" alt="" data-caption="Natural touchscreen experience - visitors intuitively feel at ease with your slideshows." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-01.jpg?scale.height=60" /> -->
+            <!-- <img title="Maximum engagement" src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-02.jpg?canvas.width=2400" alt="" data-caption="Works beautifully out-of-the-box or optimize 30 popular settings to meet your requirements." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-02.jpg?scale.height=60" /> -->
+            <!-- <img title="Ken Burns gorgeousness" data-caption="Enable the popular zoom/pan/fade Ken Burns effect - like the one you see on this demo." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-03.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-03.jpg?scale.height=60" /> -->
+            <!-- <img title="Responsive sizing on every device" data-caption="Images automatically resize to fit your viewers screen, so they always look amazing." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-04.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-04.jpg?scale.height=60" /> -->
+            <!-- <img title="Extensions for quick installation" data-caption="Free plugins for 19 popular platforms for super-easy installation and customization." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-05.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-05.jpg?scale.height=60" /> -->
+            <!-- <img title="JavaScript slideshow" data-caption="Uses pure JavaScript and CSS. jQuery isn't required but is fully supported (as are all other JavaScript frameworks)." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-06.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-06.jpg?scale.height=60" /> -->
+            <!-- <img title="Highly customisable" data-caption="Make it exactly how you want it - there are thousands of possible combinations." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-07.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-07.jpg?scale.height=60" /> -->
+            <!-- <img title="Full-screen power" data-caption="Knock-out big images to fill the screen. Enable full-screen images for a real wow-factor." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-08.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-08.jpg?scale.height=60" /> -->
+            <!-- <img title="Works on any website" data-caption="Custom-built websites, WordPress, Magento, eBay, whatever! Magic Slideshow works everywere." src="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-09.jpg?canvas.width=2400" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-09.jpg?scale.height=60" /> -->
+            <img title="Touch, tap, swipe" src="https://i.pinimg.com/originals/75/52/4b/75524b6816dc0a06675c2331885bafc1.jpg" alt="" data-caption="Natural touchscreen experience - visitors intuitively feel at ease with your slideshows." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-01.jpg?scale.height=60" />
+            <!-- <img title="Maximum engagement" src="https://i.pinimg.com/originals/7a/f9/05/7af9056a5fc3cb13a02cc1d065507909.jpg" alt="" data-caption="Works beautifully out-of-the-box or optimize 30 popular settings to meet your requirements." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-02.jpg?scale.height=60" /> -->
+            <!-- <img title="Ken Burns gorgeousness" data-caption="Enable the popular zoom/pan/fade Ken Burns effect - like the one you see on this demo." src="https://i.ytimg.com/vi/7_QG2AZegAM/maxresdefault.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-03.jpg?scale.height=60" /> -->
+            <!-- <img title="Responsive sizing on every device" data-caption="Images automatically resize to fit your viewers screen, so they always look amazing." src="http://www.sleeping-trees.com/tent.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-04.jpg?scale.height=60" /> -->
+            <!-- <img title="Extensions for quick installation" data-caption="Free plugins for 19 popular platforms for super-easy installation and customization." src="https://fablesofaesop.com/wp-content/uploads/2013/11/i014_th_lion_mouse.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-05.jpg?scale.height=60" /> -->
+            <!-- <img title="JavaScript slideshow" data-caption="Uses pure JavaScript and CSS. jQuery isn't required but is fully supported (as are all other JavaScript frameworks)." src="https://i.pinimg.com/originals/b8/f1/6c/b8f16c49ce97717709fc5edd5fc4edb7.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-06.jpg?scale.height=60" /> -->
+            <!-- <img title="Highly customisable" data-caption="Make it exactly how you want it - there are thousands of possible combinations." src="https://thumb1.shutterstock.com/display_pic_with_logo/171427636/1128788753/stock-photo-woman-is-very-terrified-trembling-from-fear-portrait-of-attractive-blond-european-female-biting-1128788753.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-07.jpg?scale.height=60" /> -->
+            <!-- <img title="Full-screen power" data-caption="Knock-out big images to fill the screen. Enable full-screen images for a real wow-factor." src="https://3.bp.blogspot.com/-TpSTz_vpudc/WhE6Gl91-6I/AAAAAAAAnbs/dpyoPqQAvtIHBU4-GmwCPn5iTojmnJ3LQCLcBGAs/s1600/maxresdefault.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-08.jpg?scale.height=60" /> -->
+            <!-- <img title="Works on any website" data-caption="Custom-built websites, WordPress, Magento, eBay, whatever! Magic Slideshow works everywere." src="http://c8.alamy.com/comp/M53PR3/feel-pity-of-young-white-lion-in-the-steel-cage-M53PR3.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-09.jpg?scale.height=60" /> -->
+			<!-- <img title="Touch, tap, swipe" src="https://i.pinimg.com/originals/75/52/4b/75524b6816dc0a06675c2331885bafc1.jpg" alt="" data-caption="Natural touchscreen experience - visitors intuitively feel at ease with your slideshows." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-01.jpg?scale.height=60" /> -->
+            <!-- <img title="Maximum engagement" src="https://i.pinimg.com/originals/7a/f9/05/7af9056a5fc3cb13a02cc1d065507909.jpg" alt="" data-caption="Works beautifully out-of-the-box or optimize 30 popular settings to meet your requirements." data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-02.jpg?scale.height=60" /> -->
+            <!-- <img title="Ken Burns gorgeousness" data-caption="Enable the popular zoom/pan/fade Ken Burns effect - like the one you see on this demo." src="https://i.ytimg.com/vi/7_QG2AZegAM/maxresdefault.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-03.jpg?scale.height=60" /> -->
+            <!-- <img title="Responsive sizing on every device" data-caption="Images automatically resize to fit your viewers screen, so they always look amazing." src="http://www.sleeping-trees.com/tent.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-04.jpg?scale.height=60" /> -->
+            <!-- <img title="Extensions for quick installation" data-caption="Free plugins for 19 popular platforms for super-easy installation and customization." src="https://fablesofaesop.com/wp-content/uploads/2013/11/i014_th_lion_mouse.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-05.jpg?scale.height=60" /> -->
+            <!-- <img title="JavaScript slideshow" data-caption="Uses pure JavaScript and CSS. jQuery isn't required but is fully supported (as are all other JavaScript frameworks)." src="https://i.pinimg.com/originals/b8/f1/6c/b8f16c49ce97717709fc5edd5fc4edb7.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-06.jpg?scale.height=60" /> -->
+            <!-- <img title="Highly customisable" data-caption="Make it exactly how you want it - there are thousands of possible combinations." src="https://thumb1.shutterstock.com/display_pic_with_logo/171427636/1128788753/stock-photo-woman-is-very-terrified-trembling-from-fear-portrait-of-attractive-blond-european-female-biting-1128788753.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-07.jpg?scale.height=60" /> -->
+            <!-- <img title="Full-screen power" data-caption="Knock-out big images to fill the screen. Enable full-screen images for a real wow-factor." src="https://3.bp.blogspot.com/-TpSTz_vpudc/WhE6Gl91-6I/AAAAAAAAnbs/dpyoPqQAvtIHBU4-GmwCPn5iTojmnJ3LQCLcBGAs/s1600/maxresdefault.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-08.jpg?scale.height=60" /> -->
+            <!-- <img title="Works on any website" data-caption="Custom-built websites, WordPress, Magento, eBay, whatever! Magic Slideshow works everywere." src="http://c8.alamy.com/comp/M53PR3/feel-pity-of-young-white-lion-in-the-steel-cage-M53PR3.jpg" alt="" data-thumb-image="https://magictoolbox.sirv.com/images/magicslideshow/model-s/models-09.jpg?scale.height=60" /> -->
+
+
+		</div>
+    </div>
+
+    <div class="app-code-sample">
+        <input type="radio" name="code-sample-nav" id="code-sample-nav-1" checked="checked"><label for="code-sample-nav-1">Global settings</label
+        ><input type="radio" name="code-sample-nav" id="code-sample-nav-2"><label for="code-sample-nav-2">Inline settings</label>
+        <div class="app-code-holder">
+            <div>
+                <pre class="prettyprint" id="app-code-sample-script">
+                    &lt;script&gt;
+                    var MagicSlideshowOptions = { effect: random; };
+                    &lt;/script&gt;
+                </pre>
+                <button class="cfg-btn cfg-btn-copy" autocomplete="off" onclick="copyToClipboard('app-code-sample-script')">Copy</button>
+            </div>
+            <div>
+                <pre class="prettyprint" id="app-code-sample-inline">
+                    &lt;div class="MagicSlideshow" data-options="effect: random;"&gt;
+                </pre>
+                <button class="cfg-btn cfg-btn-copy" autocomplete="off" onclick="copyToClipboard('app-code-sample-inline')">Copy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wizard-settings col">
+    <div class="settings-controls">
+        <button class="cfg-btn btn-preview" form="app-params-form" autocomplete="off" onclick="applySettings();">Apply settings</button>
+    </div>
+    <div class="inner">
+        <form id="app-params-form" autocomplete="off" onsubmit="return false;">
+        <table id="params">
+            <tr><td>Effect:</td><td>
+                <select name="effect">
+                    <option selected value="slide">slide</option>
+                    <option value="fade">fade</option>
+                    <option value="fade-up">fade-up</option>
+                    <option value="fade-down">fade-down</option>
+                    <option value="dissolve">dissolve</option>
+                    <option value="cube">cube</option>
+                    <option value="bars3d">bars3d</option>
+                    <option value="slide-in">slide-in</option>
+                    <option value="slide-out">slide-out</option>
+                    <option value="flip">flip</option>
+                    <option value="blinds3d">blinds3d</option>
+                    <option value="slide-change">slide-change</option>
+                    <option value="diffusion">diffusion</option>
+                    <option value="blocks">blocks</option>
+                    <option value="random">random</option>
+                </select>
+            </td></tr>
+            <tr><td>Effect speed:</td><td><input type="number" name="effectSpeed" value="600"/>
+            <span class="values">milliseconds</span></td></tr>
+            <tr><td>Orientation:</td><td>
+                <select name="orientation">
+                    <option selected value="horizontal">horizontal</option>
+                    <option value="vertical">vertical</option>
+                </select>
+            </td></tr>
+            <tr><td>Effect easing:</td><td><input type="text" name="effectEasing" value="cubic-bezier(.8, 0, .5, 1)"/>
+                <span class="values"><p>The <a href="https://developer.mozilla.org/en/docs/Web/CSS/timing-function" target="_blank">&lt;easing function&gt;</a> that describes an acceleration curve, so the speed of the transition can vary over its duration.</p></span>
+                <span class="values"><p>You can model your own acceleration curve (Bezier curve) here:</p> <a href="http://cubic-bezier.com" target="_blank">http://cubic-bezier.com</a></span>
+            </td></tr>
+            <tr><td>Slideshow width:</td><td><input type="text" name="width" value="auto"/>
+            <span class="values">auto | &lt;pixels&gt; | &lt;percentage&gt; </span></td></tr>
+            <tr><td>Slideshow height:</td><td><input type="text" name="height" value="auto"/>
+            <span class="values">auto | &lt;pixels&gt; | &lt;percentage&gt;</span></td></tr>
+            <tr><td>Slide duration:</td><td><input type="number" name="slideDuration" value="6000"/>
+            <span class="values">milliseconds</span></td></tr>
+            <tr><td>Selectors:</td><td>
+                <select name="selectors">
+                    <option selected value="none">none</option>
+                    <option value="left">left</option>
+                    <option value="top">top</option>
+                    <option value="right">right</option>
+                    <option value="bottom">bottom</option>
+                </select>
+            </td></tr>
+            <tr><td>Selectors style:</td><td>
+                <select name="selectorsStyle">
+                    <option selected value="bullets">bullets</option>
+                    <option value="thumbnails">thumbnails</option>
+                </select>
+            </td></tr>
+            <tr><td>Selectors size:</td><td><input type="number" name="selectors-size" value="70"/>
+            <span class="values">&lt;pixels&gt;</span></td></tr>
+            <tr><td>Selectors-eye:</td><td>
+                <select name="selectorsEye">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </td></tr>
+            <tr><td>Bullets preview:</td><td>
+                <select name="bulletsPreview">
+                    <option value="none">none</option>
+                    <option selected value="top">top</option>
+                    <option value="bottom">bottom</option>
+                </select>
+            </td></tr>
+            <tr><td>Selectors fill:</td><td>
+                <select name="selectorsFill">
+                    <option selected value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+            </td></tr>
+            <tr><td>Caption:</td><td>
+                <select name="caption">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </td></tr>
+
+            <tr><td>Arrows:</td><td>
+                <select name="arrows">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </td></tr>
+            <tr><td>Fullscreen:</td><td>
+                <select name="fullscreen">
+                    <option selected value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+            </td></tr>
+            <tr><td>Loop:</td><td>
+                <select name="loop">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </td></tr>
+            <tr><td>Shuffle:</td><td>
+                <select name="shuffle">
+                    <option selected value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+            </td></tr>
+            <tr><td>Kenburns:</td><td>
+                <select name="kenburns">
+                    <option selected value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+            </td></tr>
+            <tr><td>Pause:</td><td>
+                <select name="pause">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </td></tr>
+            <tr><td>Preload:</td><td>
+                <select name="preload">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </td></tr>
+            <tr><td>Autoplay:</td><td>
+                <select name="autoplay">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </td></tr>
+            <tr><td>Keyboard:</td><td>
+                <select name="keyboard">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </td></tr>
+            <tr><td>Show-loader:</td><td>
+                <select name="showLoader">
+                    <option value="true">true</option>
+                    <option selected value="false">false</option>
+                </select>
+            </td></tr>
+            <tr><td>Autostart:</td><td>
+                <select name="autostart">
+                    <option selected value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+                <span class="values">Auto init slideshow</span>
+            </td></tr>
+        </table>
+        </form>
+    </div>
+    <div class="footer">&copy; <a href="https://www.magictoolbox.com">Magic Toolbox</a></div>
+</div>
+<div id="code-to-copy"></div>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.min.js"></script>
+<script>
+    var arr = magicJS.$A(document.getElementsByTagName("SELECT"));
+    arr[('each' in arr) ? 'each' : 'jEach'](function(el) { if ('effect' === el.getAttribute('name')) { el.value = 'random'; } });
+    try { prettyPrint(); } catch(e) {}
+</script>
+</body></html>
