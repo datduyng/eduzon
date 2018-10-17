@@ -1,5 +1,5 @@
 # Eduzon-aws-hackathon
-- This application was developed for aws artificial intelligence hackathon
+- This application was developed for [aws artificial intelligence hackathon](https://awsai.devpost.com/?ref_content=default&ref_feature=challenge&ref_medium=discover)
 
 
 ## Basic idea and usage.
