@@ -4,6 +4,7 @@
 import boto3
 import requests
 import sys
+import os
 # import imageScrapper
 
 # print all bucket 
@@ -39,7 +40,6 @@ def get_image_from_file(fileName):
 
 
 '''
-
 param: im_links list of link
 '''
 def get_associate_from_im(im_links):
@@ -47,7 +47,10 @@ def get_associate_from_im(im_links):
     fileName='0.jpg'
     bucket='rekcog'
 
-    client=boto3.client('rekognition')
+    os.environ['AWS_PROFILE'] = "adminuser"
+    os.environ['AWS_DEFAULT_REGION'] = "us-east-1"
+    client=boto3.client('rekognition',region_name='us-east-1')
+
     associates = []
     # ''' Detect object in image ex
     # response = client.detect_labels(Image={'S3Object':{'Bucket':'rekcog','Name':fileName}})
@@ -57,11 +60,13 @@ def get_associate_from_im(im_links):
     # imUrl = 'https://s7d1.scene7.com/is/image/PETCO/puppy-090517-dog-featured-355w-200h-d'
     # imUrl = 'https://i.ytimg.com/vi/JVkZGK06CXE/maxresdefault.jpg'
     # fileName = 
+    # print(im_links)
     for imUrl in im_links:
         associate = []
         imBytes = get_image_from_url(imUrl)
+        # print(imBytes)
         response = client.detect_labels(Image={'Bytes':imBytes})
-        # print('Detected labels for ' + fileName)    
+        # print(response) 
         for label in response['Labels']:
             # print (label['Name'] + ' : ' + str(label['Confidence']))
             associate.append(label['Name'].lower())
@@ -83,6 +88,7 @@ def get_associate_from_im(im_links):
             # print ('Type:' + text['Type'])
             # print('')
         associates.append(associate)
+    # print(associates)
     return associates
         # associate.append(objects)
         # associate.append(texts)
@@ -98,3 +104,4 @@ def get_associate_from_im(im_links):
 
         # ref
         #https://www.youtube.com/watch?v=f4NIuLb2QkI
+

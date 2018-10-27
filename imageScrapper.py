@@ -6,7 +6,6 @@ chcp 65001
 set PYTHONIOENCODING=utf-8
 avoid error: 
 UnicodeEncodeError: 'charmap' codec can't encode character '\u2661' in position 71490: character maps to <undefined>
-
 '''
 
 import random
@@ -18,7 +17,7 @@ import time
 def save_im_from_url(im_link, file_name):
     urllib2.urlretrieve(im_link,file_name)
 
-def im_link_scrapper(query):
+def im_link_scrapper(query,n):# scrapp link of the first n image
     im_dir_name = './query-image/'
     # query = 'friend+need+be+friend';
     url="https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch"
@@ -32,7 +31,6 @@ def im_link_scrapper(query):
     # response = urllib3.urlopen(url)
     # webcontent = reponse.read()
 
-    n = 2 # scrapp first 30 
     # html = req.content 
     html = urllib2.urlopen(urllib2.Request(url,headers=header))
     soup = bs(html,'html.parser')
@@ -62,6 +60,4 @@ def im_link_scrapper(query):
     # > req 
     # > req.content
 
-    # <div class="rg_meta notranslate">{"cl":3,"clt":"n","cr":3,"ct":18,"id":"ZCsLyEGOVR16cM:","isu":"vetstreet.com","itg":0,"ity":"","oh":180,"ou":"https://vetstreet.brightspotcdn.com/dims4/default/5b3ffe7/2147483647/thumbnail/180x180/quality/90/?url\u003dhttps%3A%2F%2Fvetstreet-brightspot.s3.amazonaws.com%2F8e%2F4e3910c36111e0bfca0050568d6ceb%2Ffile%2Fhub-dogs-puppy.jpg","ow":180,"pt":"Complete Guide to Caring for Dogs | Dog Breed Information, Dog ...","rh":"vetstreet.com","rid":"jlNN0sb8NP8wgM","rt":0,"ru":"http://www.vetstreet.com/dogs/","s":"Your New Puppy","sc":1,"st":"Vetstreet.com","th":180,"tu":"https://encrypted-tbn0.gstatic.com/images?q\u003dtbn:ANd9GcQZq-igRP1i
-    
-# print(im_link_scrapper('dog'))
+# print(im_link_scrapper('dog',2))

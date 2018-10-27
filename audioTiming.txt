@@ -1,0 +1,15 @@
+{"time":0,"type":"sentence","start":0,"end":48,"value":"Once upon a time there lived a lion in a forest."}
+{"time":2789,"type":"sentence","start":49,"end":76,"value":"One day after a heavy meal."}
+{"time":4650,"type":"sentence","start":77,"end":106,"value":"It was sleeping under a tree."}
+{"time":6400,"type":"sentence","start":107,"end":176,"value":"After a while, there came a mouse and it started to play on the lion."}
+{"time":10175,"type":"sentence","start":177,"end":263,"value":"Suddenly the lion got up with anger and looked for those who disturbed its nice sleep."}
+{"time":14503,"type":"sentence","start":264,"end":319,"value":"Then it saw a small mouse standing trembling with fear."}
+{"time":17613,"type":"sentence","start":320,"end":365,"value":"The lion jumped on it and started to kill it."}
+{"time":19988,"type":"sentence","start":366,"end":409,"value":"The mouse requested the lion to forgive it."}
+{"time":22311,"type":"sentence","start":410,"end":441,"value":"The lion felt pity and left it."}
+{"time":24383,"type":"sentence","start":442,"end":461,"value":"The mouse ran away."}
+{"time":25876,"type":"sentence","start":462,"end":519,"value":"On another day, the lion was caught in a net by a hunter."}
+{"time":29316,"type":"sentence","start":520,"end":557,"value":"The mouse came there and cut the net."}
+{"time":31332,"type":"sentence","start":558,"end":574,"value":"Thus it escaped."}
+{"time":32695,"type":"sentence","start":575,"end":626,"value":"There after, the mouse and the lion became friends."}
+{"time":35809,"type":"sentence","start":627,"end":671,"value":"They lived happily in the forest afterwards."}

@@ -1,0 +1,4 @@
+{"time":0,"type":"sentence","start":0,"end":14,"value":"I love Banana."}
+{"time":1274,"type":"sentence","start":15,"end":34,"value":"I love you as well."}
+{"time":2759,"type":"sentence","start":35,"end":59,"value":"Let me tell you a story."}
+{"time":4545,"type":"sentence","start":60,"end":94,"value":"My father is a worker at a factory"}

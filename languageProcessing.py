@@ -32,6 +32,7 @@ def getMainKeyword(query):
     # TODO:word each sentence in to list and gen keyword
     # for each sentence
     query = query.replace("and"," ")
+    query 
     texts = query.split(".")
     docs = []
     keywords = []
@@ -50,7 +51,7 @@ def getMainKeyword(query):
         #replace ' ' with '+'
         keywords.append(keyword.strip().replace(' ','+'))
 
-        
+    print(keywords)
 
     return keywords
     # for tok in keywords:
